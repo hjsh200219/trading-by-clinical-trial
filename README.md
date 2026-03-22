@@ -12,35 +12,26 @@ Analyzes Korean pharma/biotech stocks using ClinicalTrials.gov data and Yahoo Fi
 
 ## 설치 / Installation
 
-두 가지 방식으로 사용할 수 있습니다:
-
-### 방법 1: Claude Code 플러그인 (권장 / Recommended)
+### Claude Code 플러그인 (권장 / Recommended)
 
 ```bash
 claude plugin add github:hjsh200219/trading-by-clinical-trial
 ```
 
-설치 후 Claude Code에서 스킬을 바로 사용할 수 있습니다.
+설치하면 MCP 서버(`cti-mcp`)가 자동 연결되고, 스킬을 바로 사용할 수 있습니다. 별도 설치 불필요.
 
-After installation, skills are immediately available in Claude Code.
+Installs the plugin with MCP server auto-connected. No additional setup required.
 
-### 방법 2: 독립 MCP 서버 (Claude Desktop)
+### MCP 서버 직접 연결 (Claude Desktop / Claude Code)
 
-```bash
-git clone https://github.com/hjsh200219/trading-by-clinical-trial.git
-cd trading-by-clinical-trial
-npm install
-npm run build
-```
-
-`claude_desktop_config.json`에 추가:
+`claude_desktop_config.json` 또는 `.mcp.json`에 추가:
 
 ```json
 {
   "mcpServers": {
     "cti-mcp": {
-      "command": "node",
-      "args": ["/absolute/path/to/trading-by-clinical-trial/dist/index.js"]
+      "type": "url",
+      "url": "https://clinical-trials-mcp.up.railway.app/mcp"
     }
   }
 }
@@ -146,9 +137,29 @@ get_stock_technicals({ symbol: "196170" })             // 알테오젠
 
 ## 개발 / Development
 
+로컬에서 직접 빌드하여 MCP 서버를 실행할 수도 있습니다.
+
+You can also build and run the MCP server locally.
+
 ```bash
-npm test          # 테스트 실행 (180 tests)
-npm run build     # TypeScript 컴파일
+git clone https://github.com/hjsh200219/trading-by-clinical-trial.git
+cd trading-by-clinical-trial
+npm install
+npm run build
+npm test          # 180 tests
+```
+
+`claude_desktop_config.json`에 로컬 서버 등록:
+
+```json
+{
+  "mcpServers": {
+    "cti-mcp": {
+      "command": "node",
+      "args": ["/absolute/path/to/trading-by-clinical-trial/dist/index.js"]
+    }
+  }
+}
 ```
 
 ---
