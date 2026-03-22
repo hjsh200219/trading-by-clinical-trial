@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "cti-pharma-analyzer",
+  "description": "한국 제약/바이오 주식의 임상시험 기반 투자 신호 분석 — ClinicalTrials.gov + Yahoo Finance 공개 데이터로 100점 스코어링, 의사결정 라벨, 기술적 지표 분석. KIS API 불필요. | Korean pharma clinical trial intelligence for stock analysis. Not financial advice.",
+  "owner": {
+    "name": "hoshin"
+  },
+  "plugins": [
+    {
+      "name": "cti-pharma-analyzer",
+      "source": "./",
+      "description": "한국 제약/바이오 임상시험 기반 주가 분석 플러그인 — 100점 스코어링 시스템, 6개 컴포넌트 분석, 의사결정 라벨(TRIAL_STRONG_POSITIVE ~ TRIAL_NEGATIVE), RSI/Bollinger/Volume 기술적 지표. | Korean pharma clinical trial intelligence plugin with 100-point scoring and technical indicators.",
+      "version": "1.0.0",
+      "category": "finance",
+      "tags": ["korean-pharma", "clinical-trial", "stock-analysis", "biotech", "임상시험", "제약", "바이오"],
+      "author": {
+        "name": "hoshin"
+      },
+      "homepage": "https://github.com/hjsh200219/trading-by-clinical-trial"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "cti-mcp-plugin",
+  "version": "0.1.0",
+  "description": "Clinical Trial Intelligence MCP Plugin for Claude Desktop",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "cti-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "mcp",
+    "clinical-trials",
+    "pharma",
+    "stock-analysis"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
+  }
+}
