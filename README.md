@@ -1,112 +1,158 @@
-# CTI MCP Plugin — Clinical Trial Intelligence for Korean Pharma
+# CTI Pharma Analyzer
 
-A Claude Desktop MCP plugin that analyzes Korean pharmaceutical stocks based on clinical trial data from ClinicalTrials.gov and public market data from Yahoo Finance.
+**한국 제약/바이오 임상시험 기반 주가 분석 도구**
 
-No KIS API required — works entirely with public data sources.
+ClinicalTrials.gov 임상시험 데이터와 Yahoo Finance 공개 시장 데이터를 활용하여 한국 제약/바이오 종목을 분석합니다. 100점 만점 스코어링, 의사결정 라벨, 기술적 지표를 제공합니다. KIS API 불필요.
 
-## Installation
+**Clinical trial intelligence for Korean pharma stocks.**
+
+Analyzes Korean pharma/biotech stocks using ClinicalTrials.gov data and Yahoo Finance public market data. Provides 100-point scoring, decision labels, and technical indicators. No KIS API required.
+
+---
+
+## 설치 / Installation
+
+두 가지 방식으로 사용할 수 있습니다:
+
+### 방법 1: Claude Code 플러그인 (권장 / Recommended)
 
 ```bash
+claude plugin add github:hjsh200219/trading-by-clinical-trial
+```
+
+설치 후 Claude Code에서 스킬을 바로 사용할 수 있습니다.
+
+After installation, skills are immediately available in Claude Code.
+
+### 방법 2: 독립 MCP 서버 (Claude Desktop)
+
+```bash
+git clone https://github.com/hjsh200219/trading-by-clinical-trial.git
+cd trading-by-clinical-trial
 npm install
 npm run build
 ```
 
-## Claude Desktop Configuration
-
-Add to your `claude_desktop_config.json`:
+`claude_desktop_config.json`에 추가:
 
 ```json
 {
   "mcpServers": {
     "cti-mcp": {
       "command": "node",
-      "args": ["/absolute/path/to/trading-by-clincial-trial/dist/index.js"]
+      "args": ["/absolute/path/to/trading-by-clinical-trial/dist/index.js"]
     }
   }
 }
 ```
 
-## Tools
+---
 
-| Tool | Description | Key Parameters |
-|------|-------------|----------------|
-| `analyze_stock` | Full clinical trial + market analysis | `symbol`, `sponsor` |
-| `search_pharma_trials` | Search ClinicalTrials.gov | `symbol`, `sponsor`, `keyword`, `phase`, `status` |
-| `score_stock` | 100-point score breakdown | `symbol`, `sponsor` |
-| `get_competition_analysis` | Competitive landscape | `nct_id`, `condition`, `exclude_sponsor` |
-| `get_upcoming_catalysts` | Upcoming trial completions | `months`, `phase`, `symbol` |
-| `get_kr_pharma_pipeline` | Korean pharma pipeline overview | `top`, `phase` |
-| `get_stock_technicals` | RSI, Bollinger, Volume Ratio | `symbol`, `range` |
+## 사용법 / Usage
 
-### Example Usage
+### Claude Code 플러그인 스킬
+
+| 스킬 | 설명 | Description |
+|------|------|-------------|
+| `analyze-stock` | 종합 분석 (임상+시장+스코어+경쟁) | Full analysis with scoring and competition |
+| `score-stock` | 6개 컴포넌트 상세 스코어링 | Detailed 100-point score breakdown |
+| `competition-analysis` | 경쟁 환경 분석 | Competitive landscape mapping |
+| `upcoming-catalysts` | 카탈리스트 추적 | Upcoming trial completion events |
+| `pipeline-overview` | 파이프라인 총괄 랭킹 | Pipeline overview ranked by trials |
+| `stock-technicals` | RSI/Bollinger/Volume 기술적 지표 | Technical indicators |
+
+**사용 예시 / Examples:**
 
 ```
-analyze_stock({ symbol: "068270" })       // Celltrion
-analyze_stock({ sponsor: "Daewoong" })    // By sponsor name
-score_stock({ symbol: "207940" })         // Samsung Biologics score
-get_stock_technicals({ symbol: "068270" })
+셀트리온 임상 분석해줘
+068270 스코어 알려줘
+한국 제약 파이프라인 현황 보여줘
+3개월 이내 Phase 3 카탈리스트 목록
+유방암 경쟁 환경 분석
+알테오젠 기술적 지표
+```
+
+### MCP 서버 도구
+
+| 도구 | 설명 | 주요 파라미터 |
+|------|------|-------------|
+| `analyze_stock` | 종합 분석 | `symbol`, `sponsor` |
+| `search_pharma_trials` | 임상시험 검색 | `symbol`, `sponsor`, `keyword`, `phase`, `status` |
+| `score_stock` | 스코어 분석 | `symbol`, `sponsor` |
+| `get_competition_analysis` | 경쟁 분석 | `nct_id`, `condition`, `exclude_sponsor` |
+| `get_upcoming_catalysts` | 카탈리스트 | `months`, `phase`, `symbol` |
+| `get_kr_pharma_pipeline` | 파이프라인 | `top`, `phase` |
+| `get_stock_technicals` | 기술적 지표 | `symbol`, `range` |
+
+**Examples:**
+
+```
+analyze_stock({ symbol: "068270" })                    // 셀트리온
+score_stock({ symbol: "207940" })                      // 삼성바이오로직스
 get_upcoming_catalysts({ months: 3, phase: "Phase 3" })
 get_kr_pharma_pipeline({ top: 10 })
 get_competition_analysis({ condition: "Breast Cancer" })
-```
-
-## Scoring Methodology (100 points)
-
-| Component | Max Points | Description |
-|-----------|-----------|-------------|
-| Temporal Proximity | 30 | How close is the trial to completion? |
-| Impact | 25 | Phase and enrollment size |
-| Market Signal | 15 | Technical indicators (RSI, Bollinger, Volume) |
-| Competition | 15 | Global competitor landscape |
-| Pipeline | 10 | Company's active trial portfolio |
-| Data Richness | 5 | Metadata completeness |
-
-## Decision Labels
-
-Clinical-trial-scoped labels (not financial advice labels):
-
-| Label | Meaning |
-|-------|---------|
-| `TRIAL_STRONG_POSITIVE` | High-confidence positive trial signal (strong clinical + favorable technicals) |
-| `TRIAL_POSITIVE` | Positive trial signal |
-| `TRIAL_NEUTRAL` | Neutral — insufficient signal strength |
-| `TRIAL_WATCH` | Worth monitoring, not actionable yet |
-| `TRIAL_REVIEW` | Results available, manual review needed |
-| `TRIAL_NEGATIVE` | Negative signal (no active trials, poor pipeline) |
-
-## Technical Indicators
-
-| Indicator | Method | Interpretation |
-|-----------|--------|----------------|
-| RSI (14) | Wilder's smoothing | < 30 oversold, 30-70 neutral, > 70 overbought |
-| Bollinger %B | 20-day SMA, 2 std dev | Position relative to upper/lower bands |
-| Volume Ratio | Current / 20-day avg | < 0.5 low, 0.5-1.5 normal, 1.5-3.0 high, > 3.0 surge |
-
-## Data Sources & Limitations
-
-| Source | Data | Cache TTL |
-|--------|------|-----------|
-| ClinicalTrials.gov API v2 | Trial metadata, phases, enrollment, completion dates | 1 hour |
-| Yahoo Finance | OHLCV price data (`.KS` KOSPI, `.KQ` KOSDAQ) | 15 minutes |
-
-**Not available** (no KIS API):
-- Institutional investor flow data
-- Short selling ratios
-- Real-time order book data
-
-When Yahoo Finance is unavailable, the Market Signal score defaults to 0 with an explanation.
-
-## Coverage
-
-30+ Korean pharma/bio companies including Celltrion, Samsung Biologics, SK Biopharmaceuticals, Yuhan, Daewoong, HLB, Alteogen, and more.
-
-## Development
-
-```bash
-npm test          # Run all tests
-npm run build     # TypeScript compile
+get_stock_technicals({ symbol: "196170" })             // 알테오젠
 ```
 
 ---
 
-_This tool provides analysis based on clinical trial metadata and public market data. Not financial advice._
+## 스코어링 (100점) / Scoring
+
+| 컴포넌트 | 점수 | 설명 | Description |
+|----------|------|------|-------------|
+| Temporal Proximity | 30 | 완료까지 남은 시간 | Time to trial completion |
+| Impact | 25 | Phase 및 등록 규모 | Phase and enrollment size |
+| Market Signal | 15 | 기술적 지표 | RSI, Bollinger, Volume |
+| Competition | 15 | 글로벌 경쟁 환경 | Global competitor landscape |
+| Pipeline | 10 | 활성 임상 포트폴리오 | Active trial portfolio |
+| Data Richness | 5 | 메타데이터 완성도 | Metadata completeness |
+
+## 의사결정 라벨 / Decision Labels
+
+| 라벨 | 의미 | Meaning |
+|------|------|---------|
+| 🟢 `TRIAL_STRONG_POSITIVE` | 강한 긍정 신호 | High-confidence positive signal |
+| 🟩 `TRIAL_POSITIVE` | 긍정 신호 | Positive trial signal |
+| 🟡 `TRIAL_NEUTRAL` | 중립 | Insufficient signal strength |
+| 🟠 `TRIAL_WATCH` | 모니터링 대상 | Worth monitoring, not actionable |
+| 🔵 `TRIAL_REVIEW` | 결과 검토 필요 | Results posted, manual review needed |
+| 🔴 `TRIAL_NEGATIVE` | 부정 신호 | Negative signal |
+
+## 기술적 지표 / Technical Indicators
+
+| 지표 | 방법 | 해석 |
+|------|------|------|
+| RSI (14) | Wilder's smoothing | < 30 과매도 / 30-70 중립 / > 70 과매수 |
+| Bollinger %B | 20일 SMA, 2σ | 밴드 내 위치 (0%=하단, 100%=상단) |
+| Volume Ratio | 당일 / 20일 평균 | < 0.5 저조 / 0.5-1.5 정상 / > 3.0 급증 |
+
+---
+
+## 커버리지 / Coverage
+
+셀트리온, 삼성바이오로직스, SK바이오팜, 유한양행, 대웅제약, 한미약품, 녹십자, 알테오젠, ABL바이오 등 **32개 한국 제약/바이오 기업**.
+
+32 Korean pharma/biotech companies including Celltrion, Samsung Biologics, SK Biopharmaceuticals, Yuhan, Daewoong, Hanmi, Green Cross, Alteogen, ABL Bio, and more.
+
+## 데이터 소스 / Data Sources
+
+| 소스 | 데이터 | Data |
+|------|--------|------|
+| ClinicalTrials.gov API v2 | 임상시험 메타데이터 | Trial metadata, phases, enrollment |
+| Yahoo Finance | OHLCV 가격 데이터 (.KS/.KQ) | Price data for KOSPI/KOSDAQ |
+
+**미제공 (KIS API 없음):** 기관 수급, 공매도 비율, 실시간 호가
+
+## 개발 / Development
+
+```bash
+npm test          # 테스트 실행 (180 tests)
+npm run build     # TypeScript 컴파일
+```
+
+---
+
+_임상시험 메타데이터와 공개 시장 데이터에 기반한 분석입니다. 투자 조언이 아닙니다._
+
+_Analysis based on clinical trial metadata and public market data. Not financial advice._
