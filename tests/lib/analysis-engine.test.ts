@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { AnalysisEngine } from '../../src/lib/analysis-engine.js';
 import { ClinicalTrialsApi } from '../../src/lib/clinicaltrials-api.js';
-import { YahooFinanceApi } from '../../src/lib/yahoo-finance-api.js';
+import { NaverFinanceApi } from '../../src/lib/naver-finance-api.js';
 import type { ClinicalTrial, OHLCVData, StockSummary } from '../../src/types.js';
 
 // --- Helpers ---
@@ -45,18 +45,18 @@ function makeSummary(): StockSummary {
 // --- Mock setup ---
 
 vi.mock('../../src/lib/clinicaltrials-api.js');
-vi.mock('../../src/lib/yahoo-finance-api.js');
+vi.mock('../../src/lib/naver-finance-api.js');
 
 describe('AnalysisEngine', () => {
   let engine: AnalysisEngine;
   let ctApi: ClinicalTrialsApi;
-  let yahooApi: YahooFinanceApi;
+  let financeApi: NaverFinanceApi;
 
   beforeEach(() => {
     vi.clearAllMocks();
     ctApi = new ClinicalTrialsApi();
-    yahooApi = new YahooFinanceApi();
-    engine = new AnalysisEngine(ctApi, yahooApi);
+    financeApi = new NaverFinanceApi();
+    engine = new AnalysisEngine(ctApi, financeApi);
   });
 
   // ── resolveCompany ──────────────────────────────────────────────────────────
@@ -108,8 +108,8 @@ describe('AnalysisEngine', () => {
     it('returns StockAnalysis with all required fields populated', async () => {
       const trial = makeTrial();
       vi.mocked(ClinicalTrialsApi.prototype.searchTrials).mockResolvedValue([trial]);
-      vi.mocked(YahooFinanceApi.prototype.getStockPrice).mockResolvedValue(makeOHLCV(30));
-      vi.mocked(YahooFinanceApi.prototype.getStockSummary).mockResolvedValue(makeSummary());
+      vi.mocked(NaverFinanceApi.prototype.getStockPrice).mockResolvedValue(makeOHLCV(30));
+      vi.mocked(NaverFinanceApi.prototype.getStockSummary).mockResolvedValue(makeSummary());
 
       const company = engine.resolveCompany('068270')!;
       const result = await engine.analyzeCompany(company);
@@ -140,8 +140,8 @@ describe('AnalysisEngine', () => {
         trialLow,
         trialHigh,
       ]);
-      vi.mocked(YahooFinanceApi.prototype.getStockPrice).mockResolvedValue(makeOHLCV(30));
-      vi.mocked(YahooFinanceApi.prototype.getStockSummary).mockResolvedValue(makeSummary());
+      vi.mocked(NaverFinanceApi.prototype.getStockPrice).mockResolvedValue(makeOHLCV(30));
+      vi.mocked(NaverFinanceApi.prototype.getStockSummary).mockResolvedValue(makeSummary());
 
       const company = engine.resolveCompany('068270')!;
       const result = await engine.analyzeCompany(company);
@@ -155,8 +155,8 @@ describe('AnalysisEngine', () => {
 
     it('sets bestTrial to null when company has no trials', async () => {
       vi.mocked(ClinicalTrialsApi.prototype.searchTrials).mockResolvedValue([]);
-      vi.mocked(YahooFinanceApi.prototype.getStockPrice).mockResolvedValue([]);
-      vi.mocked(YahooFinanceApi.prototype.getStockSummary).mockResolvedValue(makeSummary());
+      vi.mocked(NaverFinanceApi.prototype.getStockPrice).mockResolvedValue([]);
+      vi.mocked(NaverFinanceApi.prototype.getStockSummary).mockResolvedValue(makeSummary());
 
       const company = engine.resolveCompany('068270')!;
       const result = await engine.analyzeCompany(company);
@@ -170,8 +170,8 @@ describe('AnalysisEngine', () => {
 
   describe('computeTechnicals', () => {
     it('returns null indicators when Yahoo Finance returns empty array', async () => {
-      vi.mocked(YahooFinanceApi.prototype.getStockPrice).mockResolvedValue([]);
-      vi.mocked(YahooFinanceApi.prototype.getStockSummary).mockResolvedValue(makeSummary());
+      vi.mocked(NaverFinanceApi.prototype.getStockPrice).mockResolvedValue([]);
+      vi.mocked(NaverFinanceApi.prototype.getStockSummary).mockResolvedValue(makeSummary());
 
       const result = await engine.computeTechnicals('068270.KS');
 

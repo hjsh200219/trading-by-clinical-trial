@@ -14,11 +14,10 @@ import type {
   CompetitorInfo,
 } from '../types.js';
 import { ClinicalTrialsApi } from './clinicaltrials-api.js';
-import { YahooFinanceApi } from './yahoo-finance-api.js';
+import { NaverFinanceApi } from './naver-finance-api.js';
 import {
   getCompanyBySymbol,
   getCompanyBySponsor,
-  getYahooSymbol,
 } from './company-mapping.js';
 import { calculateRSI } from './technical/rsi.js';
 import { calculateBollinger } from './technical/bollinger.js';
@@ -36,11 +35,11 @@ const DISCLAIMER = 'Based on clinical trial metadata and public market data. Not
 
 export class AnalysisEngine {
   private ctApi: ClinicalTrialsApi;
-  private yahooApi: YahooFinanceApi;
+  private financeApi: NaverFinanceApi;
 
-  constructor(ctApi?: ClinicalTrialsApi, yahooApi?: YahooFinanceApi) {
+  constructor(ctApi?: ClinicalTrialsApi, financeApi?: NaverFinanceApi) {
     this.ctApi = ctApi ?? new ClinicalTrialsApi();
-    this.yahooApi = yahooApi ?? new YahooFinanceApi();
+    this.financeApi = financeApi ?? new NaverFinanceApi();
   }
 
   resolveCompany(symbol?: string, sponsor?: string): KrPharmaCompany | undefined {
@@ -55,15 +54,15 @@ export class AnalysisEngine {
     return undefined;
   }
 
-  async computeTechnicals(yahooSymbol: string): Promise<{
+  async computeTechnicals(symbol: string): Promise<{
     rsi: RSIResult | null;
     bollinger: BollingerResult | null;
     volumeRatio: VolumeRatioResult | null;
     summary: StockSummary | null;
   }> {
     const [ohlcv, summary] = await Promise.all([
-      this.yahooApi.getStockPrice(yahooSymbol),
-      this.yahooApi.getStockSummary(yahooSymbol),
+      this.financeApi.getStockPrice(symbol),
+      this.financeApi.getStockSummary(symbol),
     ]);
 
     const closes: number[] = (ohlcv as OHLCVData[])
@@ -126,8 +125,6 @@ export class AnalysisEngine {
   }
 
   async analyzeCompany(company: KrPharmaCompany): Promise<StockAnalysis> {
-    const yahooSymbol = getYahooSymbol(company.symbol);
-
     // Fetch trials for all sponsor names in parallel
     const trialArrays = await Promise.all(
       company.sponsorNames.map((sponsor) => this.ctApi.searchTrials({ sponsor }))
@@ -142,16 +139,14 @@ export class AnalysisEngine {
     }
     const allCompanyTrials = Array.from(trialMap.values());
 
-    // Compute technicals if yahoo symbol is available
+    // Compute technicals using Naver Finance (KRX symbol directly)
     let technicals: Awaited<ReturnType<AnalysisEngine['computeTechnicals']>> = {
       rsi: null,
       bollinger: null,
       volumeRatio: null,
       summary: null,
     };
-    if (yahooSymbol) {
-      technicals = await this.computeTechnicals(yahooSymbol);
-    }
+    technicals = await this.computeTechnicals(company.symbol);
 
     const marketSignal: MarketSignalInput | null =
       technicals.rsi !== null || technicals.bollinger !== null || technicals.volumeRatio !== null

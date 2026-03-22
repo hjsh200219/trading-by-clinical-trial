@@ -5,7 +5,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod';
 import { AnalysisEngine } from './lib/analysis-engine.js';
 import { ClinicalTrialsApi } from './lib/clinicaltrials-api.js';
-import { YahooFinanceApi } from './lib/yahoo-finance-api.js';
+import { NaverFinanceApi } from './lib/naver-finance-api.js';
 import { mapCompetitors } from './lib/competition-mapper.js';
 import { getAllCompanies } from './lib/company-mapping.js';
 import { registerSecondaryTools } from './lib/tools-secondary.js';
@@ -185,11 +185,11 @@ export function createServer(): McpServer {
   });
 
   const ctApi = new ClinicalTrialsApi();
-  const yahooApi = new YahooFinanceApi();
-  const engine = new AnalysisEngine(ctApi, yahooApi);
+  const financeApi = new NaverFinanceApi();
+  const engine = new AnalysisEngine(ctApi, financeApi);
 
   // Register tools 5-7 (upcoming catalysts, pipeline, technicals)
-  registerSecondaryTools(server, ctApi, yahooApi);
+  registerSecondaryTools(server, ctApi, financeApi);
 
   // ── ping ─────────────────────────────────────────────────────────────────
   server.tool('ping', 'Health check — returns pong', {}, async () => ({

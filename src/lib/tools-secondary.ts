@@ -1,10 +1,9 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { ClinicalTrialsApi } from './clinicaltrials-api.js';
-import { YahooFinanceApi } from './yahoo-finance-api.js';
+import { NaverFinanceApi } from './naver-finance-api.js';
 import {
   getCompanyBySymbol,
-  getYahooSymbol,
   getAllCompanies,
 } from './company-mapping.js';
 import { calculateRSI } from './technical/rsi.js';
@@ -15,7 +14,7 @@ import type { ClinicalTrial, KrPharmaCompany } from '../types.js';
 export function registerSecondaryTools(
   server: McpServer,
   ctApi: ClinicalTrialsApi,
-  yahooApi: YahooFinanceApi
+  financeApi: NaverFinanceApi
 ): void {
   // Tool 5: get_upcoming_catalysts
   server.tool(
@@ -240,21 +239,9 @@ export function registerSecondaryTools(
           };
         }
 
-        const yahooSymbol = getYahooSymbol(symbol);
-        if (!yahooSymbol) {
-          return {
-            content: [
-              {
-                type: 'text' as const,
-                text: `## Error\n\nCould not resolve Yahoo Finance symbol for \`${symbol}\`.`,
-              },
-            ],
-          };
-        }
-
         const [ohlcv, summary] = await Promise.all([
-          yahooApi.getStockPrice(yahooSymbol, range),
-          yahooApi.getStockSummary(yahooSymbol),
+          financeApi.getStockPrice(company.symbol, range),
+          financeApi.getStockSummary(company.symbol),
         ]);
 
         if (ohlcv.length === 0) {
@@ -262,7 +249,7 @@ export function registerSecondaryTools(
             content: [
               {
                 type: 'text' as const,
-                text: `## Error\n\nNo price data available for \`${yahooSymbol}\` with range \`${range}\`.`,
+                text: `## Error\n\nNo price data available for \`${company.symbol}\` with range \`${range}\`.`,
               },
             ],
           };
@@ -322,7 +309,7 @@ export function registerSecondaryTools(
         const lines = [
           `## ${company.nameEn} — Technical Indicators`,
           '',
-          `**Symbol**: ${yahooSymbol}`,
+          `**Symbol**: ${company.symbol}`,
           `**Current Price**: ${currentPrice}`,
           `**Range**: ${range}`,
           '',
@@ -335,7 +322,7 @@ export function registerSecondaryTools(
           `**Summary**: ${summaryLine}`,
           '',
           '---',
-          '_Based on public market data from Yahoo Finance. Not financial advice._',
+          '_Based on public market data from Naver Finance. Not financial advice._',
         ];
 
         return { content: [{ type: 'text' as const, text: lines.join('\n') }] };
