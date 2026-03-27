@@ -4,6 +4,7 @@
 
 | Document | Status | Description |
 |----------|--------|-------------|
+| [core-beliefs.md](core-beliefs.md) | Active | Core engineering beliefs and design principles |
 | [layer-rules.md](layer-rules.md) | Active | Layer dependency rules and module boundaries |
 
 ## Related References
