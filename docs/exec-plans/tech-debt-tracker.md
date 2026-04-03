@@ -27,14 +27,9 @@
 - **Description**: When an external API is fully down, retry exhaustion adds latency to every request. A circuit breaker would fail fast after repeated failures.
 - **Priority**: Medium
 
-### TD-005: Plugin JSON References Yahoo Finance
-- **File**: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`
-- **Impact**: Low (cosmetic)
-- **Description**: Plugin metadata still references Yahoo Finance in descriptions, despite the switch to Naver Finance.
-- **Priority**: Low
-
 ## Resolved Tech Debt
 
 | ID | Description | Resolution | Date |
 |----|-------------|------------|------|
+| TD-005 | Plugin JSON References Yahoo Finance | Plugin JSON updated to reference Naver Finance | 2025-03 |
 | — | Yahoo Finance API blocking KR stocks | Replaced with Naver Finance API | 2025-03 |

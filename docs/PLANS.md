@@ -8,7 +8,7 @@ CTI Pharma Analyzer v0.1.0 is a working MCP server with:
 - 6 decision labels
 - 3 technical indicators (RSI, Bollinger, Volume Ratio)
 - 32 Korean pharma/biotech companies
-- 180 tests passing
+- 186 tests passing
 - Deployed on Railway (remote MCP URL)
 - Published as Claude Code plugin
 

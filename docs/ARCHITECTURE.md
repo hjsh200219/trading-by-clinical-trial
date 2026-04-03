@@ -10,7 +10,7 @@ CTI Pharma Analyzer is an MCP (Model Context Protocol) server that scores Korean
 - **Language**: TypeScript (strict mode)
 - **Protocol**: MCP via `@modelcontextprotocol/sdk` (stdio transport)
 - **Validation**: Zod (v4)
-- **Tests**: Vitest (180 tests)
+- **Tests**: Vitest (186 tests)
 - **Deployment**: Railway (remote MCP URL) + Claude Code Plugin
 
 ## Directory Layout
@@ -29,6 +29,7 @@ src/
     yahoo-finance-api.ts      # Yahoo Finance API client (legacy, unused)
     company-mapping.ts        # Symbol/sponsor lookup helpers
     competition-mapper.ts     # Builds competitor list from trial results
+    combo-scorer.ts           # Signal Combo Scoring Engine (10 combo patterns)
     decision-matrix.ts        # Priority-based decision label assignment
     tools-secondary.ts        # MCP tools 5-7 (catalysts, pipeline, technicals)
     scoring/
@@ -40,7 +41,7 @@ src/
       data-richness-scorer.ts
       market-signal-scorer.ts
     technical/
-      indicators.ts           # Barrel export for all technical indicators
+      indicators.ts           # 5-Strategy Technical Analysis Engine (RSI/BB/VR/MACD/Stochastic)
       rsi.ts                  # RSI(14) — Wilder's smoothing
       bollinger.ts            # Bollinger %B — 20-SMA, 2 sigma
       volume-ratio.ts         # Current / 20-day average volume

@@ -14,7 +14,7 @@
 | MCP integration | ~10 | `tests/integration/mcp-tools.test.ts` |
 | Cache | ~10 | `tests/lib/cache.test.ts` |
 | Utility | ~5 | `tests/lib/company-mapping.test.ts`, `competition-mapper.test.ts` |
-| **Total** | **~180** | |
+| **Total** | **~186** | |
 
 ### Type Safety
 
@@ -54,5 +54,5 @@
 
 ```bash
 npm run build   # TypeScript compilation (strict mode)
-npm test        # Vitest suite (180 tests, 30s timeout)
+npm test        # Vitest suite (186 tests, 30s timeout)
 ```

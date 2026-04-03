@@ -14,7 +14,7 @@
 | Language | TypeScript (strict mode) |
 | Protocol | MCP via `@modelcontextprotocol/sdk` |
 | Validation | Zod v4 |
-| Tests | Vitest (180 tests) |
+| Tests | Vitest (186 tests) |
 | Deployment | Railway (remote MCP URL) + Claude Code Plugin |
 
 ## Layer Architecture

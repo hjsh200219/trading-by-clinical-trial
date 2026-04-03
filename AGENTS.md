@@ -8,7 +8,7 @@ Scores stocks (100-point system) using ClinicalTrials.gov + Naver Finance public
 ```bash
 npm install       # Install dependencies
 npm run build     # TypeScript -> dist/
-npm test          # Vitest (180 tests)
+npm test          # Vitest (186 tests)
 npm start         # Run MCP server (stdio)
 ```
 
@@ -23,6 +23,7 @@ src/lib/scoring/*.ts         # 6 scoring components (100 pts total)
 src/lib/technical/*.ts       # RSI, Bollinger, Volume Ratio (pure math)
 src/lib/clinicaltrials-api.ts  # ClinicalTrials.gov v2 client
 src/lib/naver-finance-api.ts   # Naver Finance chart client
+src/lib/combo-scorer.ts          # Signal Combo Scoring Engine (10 combo patterns)
 src/lib/decision-matrix.ts     # Priority-based decision labels
 src/data/kr-pharma-companies.ts  # 32 company registry
 ```

@@ -146,7 +146,7 @@ git clone https://github.com/hjsh200219/trading-by-clinical-trial.git
 cd trading-by-clinical-trial
 npm install
 npm run build
-npm test          # 180 tests
+npm test          # 186 tests
 ```
 
 `claude_desktop_config.json`에 로컬 서버 등록:
