@@ -2,11 +2,11 @@
 
 **한국 제약/바이오 임상시험 기반 주가 분석 도구**
 
-ClinicalTrials.gov 임상시험 데이터와 Yahoo Finance 공개 시장 데이터를 활용하여 한국 제약/바이오 종목을 분석합니다. 100점 만점 스코어링, 의사결정 라벨, 기술적 지표를 제공합니다. KIS API 불필요.
+ClinicalTrials.gov 임상시험 데이터와 Naver Finance 공개 시장 데이터를 활용하여 한국 제약/바이오 종목을 분석합니다. 100점 만점 스코어링, 의사결정 라벨, 기술적 지표를 제공합니다. KIS API 불필요.
 
 **Clinical trial intelligence for Korean pharma stocks.**
 
-Analyzes Korean pharma/biotech stocks using ClinicalTrials.gov data and Yahoo Finance public market data. Provides 100-point scoring, decision labels, and technical indicators. No KIS API required.
+Analyzes Korean pharma/biotech stocks using ClinicalTrials.gov data and Naver Finance public market data. Provides 100-point scoring, decision labels, and technical indicators. No KIS API required.
 
 ---
 
@@ -131,7 +131,7 @@ get_stock_technicals({ symbol: "196170" })             // 알테오젠
 | 소스 | 데이터 | Data |
 |------|--------|------|
 | ClinicalTrials.gov API v2 | 임상시험 메타데이터 | Trial metadata, phases, enrollment |
-| Yahoo Finance | OHLCV 가격 데이터 (.KS/.KQ) | Price data for KOSPI/KOSDAQ |
+| Naver Finance (fchart) | OHLCV 가격 데이터 | Price data for KRX (KOSPI/KOSDAQ) |
 
 **미제공 (KIS API 없음):** 기관 수급, 공매도 비율, 실시간 호가
 

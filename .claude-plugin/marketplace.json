@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "cti-pharma-analyzer",
-  "description": "한국 제약/바이오 주식의 임상시험 기반 투자 신호 분석 — ClinicalTrials.gov + Yahoo Finance 공개 데이터로 100점 스코어링, 의사결정 라벨, 기술적 지표 분석. KIS API 불필요. | Korean pharma clinical trial intelligence for stock analysis. Not financial advice.",
+  "description": "한국 제약/바이오 주식의 임상시험 기반 투자 신호 분석 — ClinicalTrials.gov + Naver Finance 공개 데이터로 100점 스코어링, 의사결정 라벨, 기술적 지표 분석. KIS API 불필요. | Korean pharma clinical trial intelligence for stock analysis. Not financial advice.",
   "owner": {
     "name": "hoshin"
   },

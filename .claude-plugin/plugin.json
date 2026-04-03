@@ -1,7 +1,7 @@
 {
   "name": "cti-pharma-analyzer",
   "version": "1.0.0",
-  "description": "한국 제약/바이오 주식의 임상시험 기반 투자 신호 분석 플러그인 — ClinicalTrials.gov 데이터와 Yahoo Finance 공개 시장 데이터를 활용하여 100점 만점 스코어링, 의사결정 라벨, 기술적 지표 분석을 제공합니다. KIS API 불필요. | Korean pharma stock analysis plugin based on clinical trial data. 100-point scoring system with decision labels. No KIS API required.",
+  "description": "한국 제약/바이오 주식의 임상시험 기반 투자 신호 분석 플러그인 — ClinicalTrials.gov 데이터와 Naver Finance 공개 시장 데이터를 활용하여 100점 만점 스코어링, 의사결정 라벨, 기술적 지표 분석을 제공합니다. KIS API 불필요. | Korean pharma stock analysis plugin based on clinical trial data. 100-point scoring system with decision labels. No KIS API required.",
   "author": {
     "name": "hoshin",
     "url": "https://github.com/hjsh200219"
@@ -20,7 +20,7 @@
     "주가분석",
     "투자신호",
     "mcp",
-    "yahoo-finance",
+    "naver-finance",
     "clinicaltrials-gov"
   ]
 }
