@@ -130,33 +130,7 @@ stock-analyst (orchestrator)
 | Add a new agent | `.claude/agents/` |
 | Add a new skill | `skills/{name}/SKILL.md` |
 
-## Documentation Map
+## Documentation
 
-### Architecture & Design
-- [ARCHITECTURE.md](ARCHITECTURE.md) -- Root-level architecture overview
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) -- Detailed system design, data flow, dependencies
-- [docs/DESIGN.md](docs/DESIGN.md) -- Design philosophy and key decisions
-- [docs/design-docs/core-beliefs.md](docs/design-docs/core-beliefs.md) -- Core engineering beliefs
-- [docs/design-docs/layer-rules.md](docs/design-docs/layer-rules.md) -- Module dependency constraints
-
-### Product & Analysis
-- [docs/PRODUCT_SENSE.md](docs/PRODUCT_SENSE.md) -- What the product does and who uses it
-- [docs/product-specs/index.md](docs/product-specs/index.md) -- Product capabilities list
-- [docs/clinical-trading-signal-logic.md](docs/clinical-trading-signal-logic.md) -- Full system design (original spec)
-
-### Quality & Reliability
-- [docs/QUALITY.md](docs/QUALITY.md) -- Testing, type safety, error handling
-- [docs/QUALITY_SCORE.md](docs/QUALITY_SCORE.md) -- Quality assessment and metrics
-- [docs/RELIABILITY.md](docs/RELIABILITY.md) -- Resilience, caching, degradation
-- [docs/SECURITY.md](docs/SECURITY.md) -- Security posture, threat model
-
-### Operations & Planning
-- [docs/PLANS.md](docs/PLANS.md) -- Current state and future directions
-- [docs/FRONTEND.md](docs/FRONTEND.md) -- UI/output format (MCP responses)
-- [docs/exec-plans/tech-debt-tracker.md](docs/exec-plans/tech-debt-tracker.md) -- Known tech debt
-- [docs/generated/db-schema.md](docs/generated/db-schema.md) -- Data schema reference
-
-### Reference Data
-- [references/scoring-methodology.md](references/scoring-methodology.md) -- Scoring component details
-- [references/decision-matrix.md](references/decision-matrix.md) -- Decision label rules
-- [references/kr-pharma-companies.md](references/kr-pharma-companies.md) -- Company mapping data
+- [ARCHITECTURE.md](ARCHITECTURE.md) -- Architecture overview
+- [docs/index.md](docs/index.md) -- Full documentation map (design, quality, plans, references)
