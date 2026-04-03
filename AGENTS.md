@@ -17,15 +17,21 @@ npm start         # Run MCP server (stdio)
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for full details.
 
 ```
-src/index.ts                 # MCP server + tools 1-4
-src/lib/analysis-engine.ts   # Orchestrator (resolve -> fetch -> score -> decide)
-src/lib/scoring/*.ts         # 6 scoring components (100 pts total)
-src/lib/technical/*.ts       # RSI, Bollinger, Volume Ratio (pure math)
-src/lib/clinicaltrials-api.ts  # ClinicalTrials.gov v2 client
-src/lib/naver-finance-api.ts   # Naver Finance chart client
-src/lib/combo-scorer.ts          # Signal Combo Scoring Engine (10 combo patterns)
-src/lib/decision-matrix.ts     # Priority-based decision labels
-src/data/kr-pharma-companies.ts  # 32 company registry
+src/index.ts                       # MCP server + tools 1-4
+src/types.ts                       # All shared type definitions
+src/lib/analysis-engine.ts         # Orchestrator (resolve -> fetch -> score -> decide)
+src/lib/tools-secondary.ts         # MCP tools 5-7 (catalysts, pipeline, technicals)
+src/lib/scoring/*.ts               # 6 scoring components (100 pts total) + weights
+src/lib/technical/*.ts             # RSI, Bollinger, Volume Ratio, Indicators (pure math)
+src/lib/clinicaltrials-api.ts      # ClinicalTrials.gov v2 client
+src/lib/naver-finance-api.ts       # Naver Finance chart client
+src/lib/yahoo-finance-api.ts       # Yahoo Finance client (legacy, unused)
+src/lib/combo-scorer.ts            # Signal Combo Scoring Engine (10 combo patterns)
+src/lib/decision-matrix.ts         # Priority-based decision labels
+src/lib/company-mapping.ts         # Symbol/sponsor lookup helpers
+src/lib/competition-mapper.ts      # Builds competitor list from trial results
+src/lib/cache.ts                   # TTLCache -- generic in-memory TTL cache
+src/data/kr-pharma-companies.ts    # 32 company registry
 ```
 
 ## Layer Rules
