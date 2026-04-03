@@ -23,7 +23,7 @@ function makeTrial(overrides: Partial<ClinicalTrial> = {}): ClinicalTrial {
 
 // Helper: build a data_richness component
 function dataRichnessComponent(points: number): ScoreComponent {
-  return { name: 'data_richness', points, maxPoints: 10, details: 'test' };
+  return { name: 'Data Richness', points, maxPoints: 10, details: 'test' };
 }
 
 // Helper: a full set of components with data_richness >= 4 (for HIGH confidence)

@@ -1,4 +1,4 @@
-import { ClinicalTrial, ScoreComponent } from '../../types.js';
+import type { ClinicalTrial, ScoreComponent } from '../../types.js';
 import { SCORING_WEIGHTS } from './weights.js';
 
 const ACTIVE_STATUS_KEYWORDS = ['recruiting', 'active', 'enrolling', 'not yet recruiting'];

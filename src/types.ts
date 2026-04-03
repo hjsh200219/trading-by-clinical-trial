@@ -127,33 +127,55 @@ export interface CompetitorInfo {
   isKorean: boolean;
 }
 
-// === Cache Types ===
+// === Technical Strategy Types ===
 
-export interface CacheEntry<T> {
-  data: T;
-  expiry: number;
+export type TechSignalDirection = 'LONG' | 'SHORT' | 'NEUTRAL';
+
+export interface TechStrategyResult {
+  strategy: string;
+  direction: TechSignalDirection;
+  confidence: number; // 0~1
+  details: string;
 }
 
-// === API Error Types ===
-
-export interface ApiError {
-  error: true;
-  message: string;
-  cachedAt?: Date;
+export interface TechAnalysisSummary {
+  strategies: TechStrategyResult[];
+  consensus: TechSignalDirection;
+  consensusScore: number; // -1 (strong SHORT) ~ +1 (strong LONG)
+  summary: string;
 }
 
-export interface StaleResponse<T> {
-  data: T;
-  stale: true;
-  cachedAt: Date;
+// === Combo Scorer Types ===
+
+export type RecommendationGrade = 'STRONG_BUY' | 'BUY' | 'WATCH' | 'HOLD' | 'AVOID';
+
+export interface SignalSnapshot {
+  institutionalNetEarly: number;
+  institutionalNetLate: number;
+  foreignNetEarly: number;
+  foreignNetLate: number;
+  shortSellingRatioAvg: number;
+  shortSellingEarly: number;
+  shortSellingLate: number;
+  dataPoints: number;
 }
 
-export type ApiResult<T> = T | ApiError | StaleResponse<T>;
-
-export function isApiError(result: unknown): result is ApiError {
-  return typeof result === 'object' && result !== null && 'error' in result && (result as ApiError).error === true;
+export interface MatchedCondition {
+  name: string;
+  met: boolean;
+  value: number | null;
+  threshold: number | null;
 }
 
-export function isStaleResponse<T>(result: unknown): result is StaleResponse<T> {
-  return typeof result === 'object' && result !== null && 'stale' in result && (result as StaleResponse<T>).stale === true;
+export interface ComboScore {
+  comboId: number;
+  comboName: string;
+  grade: RecommendationGrade;
+  expectedReturn: number;
+  winRate: number;
+  confidence: number;
+  phaseMultiplier: number;
+  adjustedReturn: number;
+  matchedConditions: MatchedCondition[];
 }
+

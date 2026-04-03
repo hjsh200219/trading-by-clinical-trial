@@ -1,4 +1,4 @@
-import { ScoreComponent, RSIResult, VolumeRatioResult } from '../../types.js';
+import type { ScoreComponent, RSIResult, VolumeRatioResult } from '../../types.js';
 import { SCORING_WEIGHTS } from './weights.js';
 
 export interface MarketSignalInput {

@@ -52,7 +52,7 @@ export function scoreDataRichness(trial: ClinicalTrial): ScoreComponent {
     (missing.length > 0 ? `. Missing: ${missing.join(', ')}` : '');
 
   return {
-    name: 'data_richness',
+    name: 'Data Richness',
     points: score,
     maxPoints: SCORING_WEIGHTS.DATA_RICHNESS,
     details,

@@ -1,4 +1,4 @@
-import { ClinicalTrial, ScoreComponent } from '../../types.js';
+import type { ClinicalTrial, ScoreComponent } from '../../types.js';
 import { SCORING_WEIGHTS } from './weights.js';
 
 const LARGE_ENROLLMENT_THRESHOLD = 500;

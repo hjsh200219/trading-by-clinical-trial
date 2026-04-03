@@ -60,64 +60,6 @@ MCP Server -> Analysis Engine -> Domain Logic (scoring, decisions) -> API Client
 7. Score 40-59 -> TRIAL_NEUTRAL
 8. Score<40 -> TRIAL_WATCH
 
-## MCP Tools
-
-| Tool | Purpose |
-|------|---------|
-| `analyze_stock` | Full analysis |
-| `search_pharma_trials` | Trial search |
-| `score_stock` | Score breakdown |
-| `get_competition_analysis` | Competitor landscape |
-| `get_upcoming_catalysts` | Trial completion calendar |
-| `get_kr_pharma_pipeline` | Pipeline ranking |
-| `get_stock_technicals` | Technical indicators |
-
-## Key Files for Agents
-
-| Task | Files |
-|------|-------|
-| Add a company | `src/data/kr-pharma-companies.ts` |
-| Change scoring weights | `src/lib/scoring/weights.ts` |
-| Modify decision logic | `src/lib/decision-matrix.ts` |
-| Add a new scorer | `src/lib/scoring/` + wire in `analysis-engine.ts` |
-| Add a new MCP tool | `src/index.ts` or `src/lib/tools-secondary.ts` |
-| Add a technical indicator | `src/lib/technical/` + wire in `analysis-engine.ts` |
-
-## Agents & Docs Map
-
-See [AGENTS.md](AGENTS.md) for the full agent architecture, documentation map, and task-to-file reference.
-
-### Architecture & Design
-- [ARCHITECTURE.md](ARCHITECTURE.md) -- Root-level architecture overview
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) -- Detailed system design, data flow, dependencies
-- [docs/DESIGN.md](docs/DESIGN.md) -- Design philosophy and key decisions
-- [docs/design-docs/core-beliefs.md](docs/design-docs/core-beliefs.md) -- Core engineering beliefs
-- [docs/design-docs/layer-rules.md](docs/design-docs/layer-rules.md) -- Module dependency constraints
-
-### Quality & Reliability
-- [docs/QUALITY.md](docs/QUALITY.md) -- Testing, type safety, error handling
-- [docs/QUALITY_SCORE.md](docs/QUALITY_SCORE.md) -- Quality assessment and metrics
-- [docs/RELIABILITY.md](docs/RELIABILITY.md) -- Resilience, caching, degradation
-- [docs/SECURITY.md](docs/SECURITY.md) -- Security posture, threat model
-
-### Product & Planning
-- [docs/PRODUCT_SENSE.md](docs/PRODUCT_SENSE.md) -- What the product does and who uses it
-- [docs/product-specs/index.md](docs/product-specs/index.md) -- Product capabilities
-- [docs/PLANS.md](docs/PLANS.md) -- Current state and future directions
-- [docs/FRONTEND.md](docs/FRONTEND.md) -- UI/output format (MCP responses)
-- [docs/exec-plans/tech-debt-tracker.md](docs/exec-plans/tech-debt-tracker.md) -- Known tech debt
-
-### Reference Data
-- [docs/generated/db-schema.md](docs/generated/db-schema.md) -- Data schema reference
-- [references/scoring-methodology.md](references/scoring-methodology.md) -- Scoring details
-- [references/decision-matrix.md](references/decision-matrix.md) -- Decision label rules
-- [references/kr-pharma-companies.md](references/kr-pharma-companies.md) -- Company mapping data
-
-
----
-
-# Agents Map
-
 ## Agent Architecture
 
 This project uses a 3-tier agent orchestration system for stock analysis, plus direct MCP tool access for programmatic use.
@@ -137,7 +79,7 @@ stock-analyst (orchestrator)
      +-- investment-reporter (sub-agent) --> final report
 ```
 
-## Agent Definitions
+### Agent Definitions
 
 | Agent | File | Model | Role |
 |-------|------|-------|------|
@@ -168,14 +110,27 @@ stock-analyst (orchestrator)
 | pipeline-overview | `skills/pipeline-overview/` | "파이프라인 현황" |
 | stock-technicals | `skills/stock-technicals/` | "알테오젠 기술적 지표" |
 
+## Key Files for Common Tasks
+
+| Task | Files to Edit |
+|------|--------------|
+| Add a company | `src/data/kr-pharma-companies.ts` |
+| Change scoring weights | `src/lib/scoring/weights.ts` |
+| Modify decision logic | `src/lib/decision-matrix.ts` |
+| Add a new scorer | `src/lib/scoring/` + wire in `analysis-engine.ts` |
+| Add a new MCP tool | `src/index.ts` or `src/lib/tools-secondary.ts` |
+| Add a technical indicator | `src/lib/technical/` + wire in `analysis-engine.ts` |
+| Add a new agent | `.claude/agents/` |
+| Add a new skill | `skills/{name}/SKILL.md` |
+
 ## Documentation Map
 
 ### Architecture & Design
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) -- System design, data flow, dependencies
+- [ARCHITECTURE.md](ARCHITECTURE.md) -- Root-level architecture overview
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) -- Detailed system design, data flow, dependencies
 - [docs/DESIGN.md](docs/DESIGN.md) -- Design philosophy and key decisions
 - [docs/design-docs/core-beliefs.md](docs/design-docs/core-beliefs.md) -- Core engineering beliefs
 - [docs/design-docs/layer-rules.md](docs/design-docs/layer-rules.md) -- Module dependency constraints
-- [ARCHITECTURE.md](ARCHITECTURE.md) -- Root-level architecture overview
 
 ### Product & Analysis
 - [docs/PRODUCT_SENSE.md](docs/PRODUCT_SENSE.md) -- What the product does and who uses it
@@ -198,16 +153,3 @@ stock-analyst (orchestrator)
 - [references/scoring-methodology.md](references/scoring-methodology.md) -- Scoring component details
 - [references/decision-matrix.md](references/decision-matrix.md) -- Decision label rules
 - [references/kr-pharma-companies.md](references/kr-pharma-companies.md) -- Company mapping data
-
-## Key Files for Common Tasks
-
-| Task | Files to Edit |
-|------|--------------|
-| Add a company | `src/data/kr-pharma-companies.ts` |
-| Change scoring weights | `src/lib/scoring/weights.ts` |
-| Modify decision logic | `src/lib/decision-matrix.ts` |
-| Add a new scorer | `src/lib/scoring/` + wire in `analysis-engine.ts` |
-| Add a new MCP tool | `src/index.ts` or `src/lib/tools-secondary.ts` |
-| Add a technical indicator | `src/lib/technical/` + wire in `analysis-engine.ts` |
-| Add a new agent | `.claude/agents/` |
-| Add a new skill | `skills/{name}/SKILL.md` |

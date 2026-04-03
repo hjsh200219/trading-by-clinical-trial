@@ -43,7 +43,7 @@ describe('Decision labels', () => {
       makeComponent('impact', 15, 25),
       makeComponent('competition', 10, 15),
       makeComponent('pipeline', 5, 10),
-      makeComponent('data_richness', 4, 5),
+      makeComponent('Data Richness', 4, 5),
       makeComponent('market_signal', 10, 15),
     ];
 

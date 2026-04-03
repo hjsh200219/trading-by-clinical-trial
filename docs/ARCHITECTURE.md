@@ -40,6 +40,7 @@ src/
       data-richness-scorer.ts
       market-signal-scorer.ts
     technical/
+      indicators.ts           # Barrel export for all technical indicators
       rsi.ts                  # RSI(14) — Wilder's smoothing
       bollinger.ts            # Bollinger %B — 20-SMA, 2 sigma
       volume-ratio.ts         # Current / 20-day average volume

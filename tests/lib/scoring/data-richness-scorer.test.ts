@@ -27,7 +27,7 @@ describe('scoreDataRichness', () => {
     const result = scoreDataRichness(trial);
     expect(result.points).toBe(5);
     expect(result.maxPoints).toBe(5);
-    expect(result.name).toBe('data_richness');
+    expect(result.name).toBe('Data Richness');
   });
 
   it('no fields populated (all null, hasResults=false) → 0 pts', () => {

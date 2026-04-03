@@ -13,7 +13,7 @@ function isWithin30Days(estimatedCompletionDate: string | null): boolean {
 }
 
 function getDataRichnessPoints(components: ScoreComponent[]): number {
-  const comp = components.find(c => c.name === 'data_richness');
+  const comp = components.find(c => c.name === 'Data Richness');
   return comp ? comp.points : 0;
 }
 
@@ -48,7 +48,7 @@ export function makeDecision(
     return {
       decision: 'TRIAL_WATCH',
       confidence,
-      reasoning: 'Insufficient data confidence: data_richness is 0 or fewer than 3 components scored.',
+      reasoning: 'Insufficient data confidence: Data Richness is 0 or fewer than 3 components scored.',
     };
   }
 
