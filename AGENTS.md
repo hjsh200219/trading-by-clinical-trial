@@ -134,3 +134,5 @@ stock-analyst (orchestrator)
 
 - [ARCHITECTURE.md](ARCHITECTURE.md) -- Architecture overview
 - [docs/index.md](docs/index.md) -- Full documentation map (design, quality, plans, references)
+
+> Be concise. No filler. Straight to the point. Use fewer words.
